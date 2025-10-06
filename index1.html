@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифровая модель карьера</title>
+     <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Основная страница с картой -->
+    <div class="container">
+        <div class="header">
+            <h1>ЦИФРОВАЯ МОДЕЛЬ УГОЛЬНОГО КАРЬЕРА</h1>
+            <div class="subtitle">Система мониторинга технологических процессов</div>
+        </div>
+        
+        <div class="image-container" id="image-container">
+            <img id="main-image" src="images/1.png" alt="3D карта угольного карьера">
+                   
+            <!-- Маркеры с фиксированными позициями в процентах -->
+            <div class="marker" style="top: 22%; left: 35%;" onclick="openExcavatorSystem(1)">
+                <div class="marker-label">Экскаватор ЭР-1250 №1</div>
+                1
+            </div>
+            <div class="marker" style="top: 30%; left: 35%;" onclick="openExcavatorSystem(2)">
+                <div class="marker-label">Экскаватор ЭШ-10/70 №2</div>
+                2
+            </div>
+            <div class="marker" style="top: 50%; left: 88%;" onclick="openExcavatorSystem(3)">
+                <div class="marker-label">Экскаватор ЭКГ-8И №3</div>
+                3
+            </div>
+            <div class="marker" style="top: 70%; left: 88%;" onclick="openExcavatorSystem(4)">
+                <div class="marker-label">Экскаватор ЭРП-2500 №4</div>
+                4
+            </div>
+        </div>
+        
+        <div class="footer-note">
+            🎯 Кликните на маркер для просмотра системы управления экскаватором
+        </div>
+    </div>
+
+    <!-- Модальные окна для каждого экскаватора -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+    
+    <!-- Экскаватор 1 -->
+    <div id="excavator-modal-1" class="excavator-modal">
+        <div class="modal-header">
+            <div class="modal-title">⚙️ СИСТЕМА УПРАВЛЕНИЯ ЭКСКАВАТОРОМ ЭР-1250 №1</div>
+            <button class="close-btn" onclick="closeModal()">✕ Закрыть</button>
+        </div>
+
+        <div class="system-container">
+            <div class="status-panel">
+                <div class="status-item">
+                    <div class="status-label">Координаты GPS</div>
+                    <div class="status-value">45.28<span class="status-unit">°N</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Высота над уровнем</div>
+                    <div class="status-value">63.3<span class="status-unit">м (осн.)</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Пройдено по рельсам</div>
+                    <div class="status-value" id="track-progress-1">88.03<span class="status-unit">м</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Межосевое расстояние</div>
+                    <div class="status-value">B202<span class="status-unit">конфиг.</span></div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="mine-section">
+                    <div class="section-title">▸ ВИЗУАЛИЗАЦИЯ РАЗРЕЗА И ПРОЦЕССА ДОБЫЧИ</div>
+                    
+                    <div class="geology-container" id="geology-container-1">
+                        <div class="geology-layer layer-overburden">
+                            <div class="layer-name">ВСКРЫШНЫЕ ПОРОДЫ</div>
+                            <div class="layer-info">Толщ. 35м | Плотн. 2,3 г/см³</div>
+                        </div>
+                        
+                        <div class="geology-layer layer-coal">
+                            <div class="layer-name">УГОЛЬНЫЙ ПЛАСТ К12</div>
+                            <div class="layer-info">Толщ. 20м | Кач. 5800 ккал</div>
+                        </div>
+                        
+                        <div class="geology-layer layer-underburden">
+                            <div class="layer-name">ПОДСТИЛАЮЩИЕ ПОРОДЫ</div>
+                            <div class="layer-info">Толщ. 45м | Креп. 18 МПа</div>
+                        </div>
+
+                        <div class="rail-system" id="rail-system-1">
+                            <div class="rail"></div>
+                        </div>
+
+                        <div class="excavator" id="excavator-1">
+                            <div class="excavator-base">
+                                <div class="excavator-cabin"></div>
+                            </div>
+                            <div class="excavator-boom"></div>
+                            <div class="rotor" id="rotor-1"></div>
+                        </div>
+                    </div>
+
+                    <div class="sensor-panel">
+                        <div class="sensor-item">
+                            <div class="sensor-value" id="station-value-1">88.03</div>
+                            <div class="sensor-label">Станция SR (м)</div>
+                        </div>
+                        <div class="sensor-item">
+                            <div class="sensor-value" id="distance-value-1">2.13</div>
+                            <div class="sensor-label">Расстояние SR-UK (м)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="control-group">
+                        <div class="control-title">▸ НАВИГАЦИЯ И УПРАВЛЕНИЕ</div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Обзор и панорамирование</div>
+                            <div class="control-buttons">
+                                <button class="control-btn" onclick="controlAction('overview_plus', 1)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 1)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 1)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 1)">+</button>
+                                <button class="control-btn warning" onclick="controlAction('emergency_stop', 1)">СТОП</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Кабина управления слева</div>
+                            <div class="control-buttons">
+                                <button class="control-btn active" onclick="controlAction('left_zoom', 1)" id="btn-left-zoom-1">✔</button>
+                                <button class="control-btn" onclick="controlAction('left_contrast', 1)" id="btn-left-contrast-1">❌</button>
+                                <button class="control-btn" onclick="controlAction('left_coal_contrast', 1)" id="btn-left-coal-1">A</button>
+                                <button class="control-btn" onclick="controlAction('left_plan_contrast', 1)" id="btn-left-plan-1">+</button>
+                                <button class="control-btn" onclick="controlAction('left_mountain_contrast', 1)" id="btn-left-mountain-1">+</button>
+                                <button class="control-btn" onclick="controlAction('left_none', 1)">---</button>
+                                <button class="control-btn" onclick="controlAction('left_plus', 1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Кабина управления справа</div>
+                            <div class="control-buttons">
+                                <button class="control-btn active" onclick="controlAction('right_minus', 1)" id="btn-right-minus-1">✔</button>
+                                <button class="control-btn active" onclick="controlAction('right_minus2', 1)" id="btn-right-minus2-1">✔</button>
+                                <button class="control-btn" onclick="controlAction('right_minus3', 1)">-</button>
+                                <button class="control-btn" onclick="controlAction('right_minus4', 1)">-</button>
+                                <button class="control-btn" onclick="controlAction('right_minus5', 1)">-</button>
+                                <button class="control-btn success" onclick="controlAction('right_sr', 1)" id="btn-right-sr-1">SR</button>
+                                <button class="control-btn" onclick="controlAction('right_minus6', 1)">-</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-message">
+                        ⚠ ТЕСТОВАЯ ЭКСПЛУАТАЦИЯ!<br>
+                        Обновление от 18.07.2007<br>
+                        Визуализация материального потока (ТЕСТ)
+                    </div>
+
+                    <div class="info-panel">
+                        <div class="info-item">
+                            <div class="info-value">1727</div>
+                            <div class="info-label">Позиция (лента)</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value" id="current-time-1">06.10 02:38:16</div>
+                            <div class="info-label">Системное время</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экскаватор 2 -->
+    <div id="excavator-modal-2" class="excavator-modal">
+        <div class="modal-header">
+            <div class="modal-title">⚙️ СИСТЕМА УПРАВЛЕНИЯ ЭКСКАВАТОРОМ ЭШ-10/70 №2</div>
+            <button class="close-btn" onclick="closeModal()">✕ Закрыть</button>
+        </div>
+
+        <div class="system-container">
+            <div class="status-panel">
+                <div class="status-item">
+                    <div class="status-label">Координаты GPS</div>
+                    <div class="status-value">45.31<span class="status-unit">°N</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Высота над уровнем</div>
+                    <div class="status-value">58.7<span class="status-unit">м (осн.)</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Пройдено по рельсам</div>
+                    <div class="status-value" id="track-progress-2">45.21<span class="status-unit">м</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Производительность</div>
+                    <div class="status-value">850<span class="status-unit">т/час</span></div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="mine-section">
+                    <div class="section-title">▸ ВИЗУАЛИЗАЦИЯ РАЗРЕЗА И ПРОЦЕССА ДОБЫЧИ</div>
+                    
+                    <div class="geology-container" id="geology-container-2">
+                        <div class="geology-layer layer-overburden">
+                            <div class="layer-name">ВСКРЫШНЫЕ ПОРОДЫ</div>
+                            <div class="layer-info">Толщ. 28м | Плотн. 2,1 г/см³</div>
+                        </div>
+                        
+                        <div class="geology-layer layer-coal">
+                            <div class="layer-name">УГОЛЬНЫЙ ПЛАСТ К8</div>
+                            <div class="layer-info">Толщ. 15м | Кач. 6100 ккал</div>
+                        </div>
+                        
+                        <div class="geology-layer layer-underburden">
+                            <div class="layer-name">ПОДСТИЛАЮЩИЕ ПОРОДЫ</div>
+                            <div class="layer-info">Толщ. 32м | Креп. 15 МПа</div>
+                        </div>
+
+                        <div class="rail-system" id="rail-system-2">
+                            <div class="rail"></div>
+                        </div>
+
+                        <div class="excavator" id="excavator-2">
+                            <div class="excavator-base">
+                                <div class="excavator-cabin"></div>
+                            </div>
+                            <div class="excavator-boom"></div>
+                            <div class="rotor" id="rotor-2"></div>
+                        </div>
+                    </div>
+
+                    <div class="sensor-panel">
+                        <div class="sensor-item">
+                            <div class="sensor-value" id="station-value-2">45.21</div>
+                            <div class="sensor-label">Станция SR (м)</div>
+                        </div>
+                        <div class="sensor-item">
+                            <div class="sensor-value" id="distance-value-2">1.85</div>
+                            <div class="sensor-label">Расстояние SR-UK (м)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="control-group">
+                        <div class="control-title">▸ НАВИГАЦИЯ И УПРАВЛЕНИЕ</div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Обзор и панорамирование</div>
+                            <div class="control-buttons">
+                                <button class="control-btn" onclick="controlAction('overview_plus', 2)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 2)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 2)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 2)">+</button>
+                                <button class="control-btn warning" onclick="controlAction('emergency_stop', 2)">СТОП</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 2)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Кабина управления слева</div>
+                            <div class="control-buttons">
+                                <button class="control-btn active" onclick="controlAction('left_zoom', 2)" id="btn-left-zoom-2">✔</button>
+                                <button class="control-btn" onclick="controlAction('left_contrast', 2)" id="btn-left-contrast-2">❌</button>
+                                <button class="control-btn" onclick="controlAction('left_coal_contrast', 2)" id="btn-left-coal-2">A</button>
+                                <button class="control-btn" onclick="controlAction('left_plan_contrast', 2)" id="btn-left-plan-2">+</button>
+                                <button class="control-btn" onclick="controlAction('left_mountain_contrast', 2)" id="btn-left-mountain-2">+</button>
+                                <button class="control-btn" onclick="controlAction('left_none', 2)">---</button>
+                                <button class="control-btn" onclick="controlAction('left_plus', 2)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Кабина управления справа</div>
+                            <div class="control-buttons">
+                                <button class="control-btn active" onclick="controlAction('right_minus', 2)" id="btn-right-minus-2">✔</button>
+                                <button class="control-btn active" onclick="controlAction('right_minus2', 2)" id="btn-right-minus2-2">✔</button>
+                                <button class="control-btn" onclick="controlAction('right_minus3', 2)">-</button>
+                                <button class="control-btn" onclick="controlAction('right_minus4', 2)">-</button>
+                                <button class="control-btn" onclick="controlAction('right_minus5', 2)">-</button>
+                                <button class="control-btn success" onclick="controlAction('right_sr', 2)" id="btn-right-sr-2">SR</button>
+                                <button class="control-btn" onclick="controlAction('right_minus6', 2)">-</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-message">
+                        ⚠ РАБОТА В ШТУРМОВОМ РЕЖИМЕ!<br>
+                        Обновление от 22.08.2007<br>
+                        Повышенная производительность
+                    </div>
+
+                    <div class="info-panel">
+                        <div class="info-item">
+                            <div class="info-value">1543</div>
+                            <div class="info-label">Позиция (лента)</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value" id="current-time-2">06.10 02:38:16</div>
+                            <div class="info-label">Системное время</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экскаватор 3 -->
+    <div id="excavator-modal-3" class="excavator-modal">
+        <div class="modal-header">
+            <div class="modal-title">⚙️ СИСТЕМА УПРАВЛЕНИЯ ЭКСКАВАТОРОМ ЭКГ-8И №3</div>
+            <button class="close-btn" onclick="closeModal()">✕ Закрыть</button>
+        </div>
+
+        <div class="system-container">
+            <div class="status-panel">
+                <div class="status-item">
+                    <div class="status-label">Координаты GPS</div>
+                    <div class="status-value">45.25<span class="status-unit">°N</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Высота над уровнем</div>
+                    <div class="status-value">71.2<span class="status-unit">м (осн.)</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Пройдено по рельсам</div>
+                    <div class="status-value" id="track-progress-3">112.45<span class="status-unit">м</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Глубина копания</div>
+                    <div class="status-value">18.5<span class="status-unit">м</span></div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="mine-section">
+                    <div class="section-title">▸ ВИЗУАЛИЗАЦИЯ РАЗРЕЗА И ПРОЦЕССА ДОБЫЧИ</div>
+                    
+                    <div class="geology-container" id="geology-container-3">
+                        <div class="geology-layer layer-overburden">
+                            <div class="layer-name">ВСКРЫШНЫЕ ПОРОДЫ</div>
+                            <div class="layer-info">Толщ. 42м | Плотн. 2,5 г/см³</div>
+                        </div>
+                        
+                        <div class="geology-layer layer-coal">
+                            <div class="layer-name">УГОЛЬНЫЙ ПЛАСТ К15</div>
+                            <div class="layer-info">Толщ. 25м | Кач. 5400 ккал</div>
+                        </div>
+                        
+                        <div class="geology-layer layer-underburden">
+                            <div class="layer-name">ПОДСТИЛАЮЩИЕ ПОРОДЫ</div>
+                            <div class="layer-info">Толщ. 38м | Креп. 22 МПа</div>
+                        </div>
+
+                        <div class="rail-system" id="rail-system-3">
+                            <div class="rail"></div>
+                        </div>
+
+                        <div class="excavator" id="excavator-3">
+                            <div class="excavator-base">
+                                <div class="excavator-cabin"></div>
+                            </div>
+                            <div class="excavator-boom"></div>
+                            <div class="rotor" id="rotor-3"></div>
+                        </div>
+                    </div>
+
+                    <div class="sensor-panel">
+                        <div class="sensor-item">
+                            <div class="sensor-value" id="station-value-3">112.45</div>
+                            <div class="sensor-label">Станция SR (м)</div>
+                        </div>
+                        <div class="sensor-item">
+                            <div class="sensor-value" id="distance-value-3">2.45</div>
+                            <div class="sensor-label">Расстояние SR-UK (м)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="control-group">
+                        <div class="control-title">▸ НАВИГАЦИЯ И УПРАВЛЕНИЕ</div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Обзор и панорамирование</div>
+                            <div class="control-buttons">
+                                <button class="control-btn" onclick="controlAction('overview_plus', 3)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 3)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 3)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 3)">+</button>
+                                <button class="control-btn warning" onclick="controlAction('emergency_stop', 3)">СТОП</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 3)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Кабина управления слева</div>
+                            <div class="control-buttons">
+                                <button class="control-btn active" onclick="controlAction('left_zoom', 3)" id="btn-left-zoom-3">✔</button>
+                                <button class="control-btn" onclick="controlAction('left_contrast', 3)" id="btn-left-contrast-3">❌</button>
+                                <button class="control-btn" onclick="controlAction('left_coal_contrast', 3)" id="btn-left-coal-3">A</button>
+                                <button class="control-btn" onclick="controlAction('left_plan_contrast', 3)" id="btn-left-plan-3">+</button>
+                                <button class="control-btn" onclick="controlAction('left_mountain_contrast', 3)" id="btn-left-mountain-3">+</button>
+                                <button class="control-btn" onclick="controlAction('left_none', 3)">---</button>
+                                <button class="control-btn" onclick="controlAction('left_plus', 3)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Кабина управления справа</div>
+                            <div class="control-buttons">
+                                <button class="control-btn active" onclick="controlAction('right_minus', 3)" id="btn-right-minus-3">✔</button>
+                                <button class="control-btn active" onclick="controlAction('right_minus2', 3)" id="btn-right-minus2-3">✔</button>
+                                <button class="control-btn" onclick="controlAction('right_minus3', 3)">-</button>
+                                <button class="control-btn" onclick="controlAction('right_minus4', 3)">-</button>
+                                <button class="control-btn" onclick="controlAction('right_minus5', 3)">-</button>
+                                <button class="control-btn success" onclick="controlAction('right_sr', 3)" id="btn-right-sr-3">SR</button>
+                                <button class="control-btn" onclick="controlAction('right_minus6', 3)">-</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-message">
+                        ⚠ РЕЖИМ ГЛУБОКОГО КОПАНИЯ!<br>
+                        Обновление от 15.09.2007<br>
+                        Работа на предельной глубине
+                    </div>
+
+                    <div class="info-panel">
+                        <div class="info-item">
+                            <div class="info-value">1892</div>
+                            <div class="info-label">Позиция (лента)</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value" id="current-time-3">06.10 02:38:16</div>
+                            <div class="info-label">Системное время</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экскаватор 4 -->
+    <div id="excavator-modal-4" class="excavator-modal">
+        <div class="modal-header">
+            <div class="modal-title">⚙️ СИСТЕМА УПРАВЛЕНИЯ ЭКСКАВАТОРОМ ЭРП-2500 №4</div>
+            <button class="close-btn" onclick="closeModal()">✕ Закрыть</button>
+        </div>
+
+        <div class="system-container">
+            <div class="status-panel">
+                <div class="status-item">
+                    <div class="status-label">Координаты GPS</div>
+                    <div class="status-value">45.33<span class="status-unit">°N</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Высота над уровнем</div>
+                    <div class="status-value">55.8<span class="status-unit">м (осн.)</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Пройдено по рельсам</div>
+                    <div class="status-value" id="track-progress-4">23.67<span class="status-unit">м</span></div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Мощность двигателя</div>
+                    <div class="status-value">2500<span class="status-unit">кВт</span></div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="mine-section">
+                    <div class="section-title">▸ ВИЗУАЛИЗАЦИЯ РАЗРЕЗА И ПРОЦЕССА ДОБЫЧИ</div>
+                    
+                    <div class="geology-container" id="geology-container-4">
+                        <div class="geology-layer layer-overburden">
+                            <div class="layer-name">ВСКРЫШНЫЕ ПОРОДЫ</div>
+                            <div class="layer-info">Толщ. 25м | Плотн. 2,0 г/см³</div>
+                        </div>
+                        
+                        <div class="geology-layer layer-coal">
+                            <div class="layer-name">УГОЛЬНЫЙ ПЛАСТ К6</div>
+                            <div class="layer-info">Толщ. 12м | Кач. 6300 ккал</div>
+                        </div>
+                        
+                        <div class="geology-layer layer-underburden">
+                            <div class="layer-name">ПОДСТИЛАЮЩИЕ ПОРОДЫ</div>
+                            <div class="layer-info">Толщ. 28м | Креп. 12 МПа</div>
+                        </div>
+
+                        <div class="rail-system" id="rail-system-4">
+                            <div class="rail"></div>
+                        </div>
+
+                        <div class="excavator" id="excavator-4">
+                            <div class="excavator-base">
+                                <div class="excavator-cabin"></div>
+                            </div>
+                            <div class="excavator-boom"></div>
+                            <div class="rotor" id="rotor-4"></div>
+                        </div>
+                    </div>
+
+                    <div class="sensor-panel">
+                        <div class="sensor-item">
+                            <div class="sensor-value" id="station-value-4">23.67</div>
+                            <div class="sensor-label">Станция SR (м)</div>
+                        </div>
+                        <div class="sensor-item">
+                            <div class="sensor-value" id="distance-value-4">1.52</div>
+                            <div class="sensor-label">Расстояние SR-UK (м)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <div class="control-group">
+                        <div class="control-title">▸ НАВИГАЦИЯ И УПРАВЛЕНИЕ</div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Обзор и панорамирование</div>
+                            <div class="control-buttons">
+                                <button class="control-btn" onclick="controlAction('overview_plus', 4)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 4)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 4)">+</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 4)">+</button>
+                                <button class="control-btn warning" onclick="controlAction('emergency_stop', 4)">СТОП</button>
+                                <button class="control-btn" onclick="controlAction('overview_plus', 4)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Кабина управления слева</div>
+                            <div class="control-buttons">
+                                <button class="control-btn active" onclick="controlAction('left_zoom', 4)" id="btn-left-zoom-4">✔</button>
+                                <button class="control-btn" onclick="controlAction('left_contrast', 4)" id="btn-left-contrast-4">❌</button>
+                                <button class="control-btn" onclick="controlAction('left_coal_contrast', 4)" id="btn-left-coal-4">A</button>
+                                <button class="control-btn" onclick="controlAction('left_plan_contrast', 4)" id="btn-left-plan-4">+</button>
+                                <button class="control-btn" onclick="controlAction('left_mountain_contrast', 4)" id="btn-left-mountain-4">+</button>
+                                <button class="control-btn" onclick="controlAction('left_none', 4)">---</button>
+                                <button class="control-btn" onclick="controlAction('left_plus', 4)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-row">
+                            <div class="control-label">Кабина управления справа</div>
+                            <div class="control-buttons">
+                                <button class="control-btn active" onclick="controlAction('right_minus', 4)" id="btn-right-minus-4">✔</button>
+                                <button class="control-btn active" onclick="controlAction('right_minus2', 4)" id="btn-right-minus2-4">✔</button>
+                                <button class="control-btn" onclick="controlAction('right_minus3', 4)">-</button>
+                                <button class="control-btn" onclick="controlAction('right_minus4', 4)">-</button>
+                                <button class="control-btn" onclick="controlAction('right_minus5', 4)">-</button>
+                                <button class="control-btn success" onclick="controlAction('right_sr', 4)" id="btn-right-sr-4">SR</button>
+                                <button class="control-btn" onclick="controlAction('right_minus6', 4)">-</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="system-message">
+                        ⚠ ВЫСОКАЯ МОЩНОСТЬ!<br>
+                        Обновление от 10.10.2007<br>
+                        Работа на повышенных оборотах
+                    </div>
+
+                    <div class="info-panel">
+                        <div class="info-item">
+                            <div class="info-value">1421</div>
+                            <div class="info-label">Позиция (лента)</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value" id="current-time-4">06.10 02:38:16</div>
+                            <div class="info-label">Системное время</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentModal = null;
+        const systemStates = {
+            1: { excavatorMoving: true, rotorActive: true, currentSpeed: 1.0, emergencyStop: false },
+            2: { excavatorMoving: true, rotorActive: true, currentSpeed: 1.2, emergencyStop: false },
+            3: { excavatorMoving: true, rotorActive: true, currentSpeed: 0.8, emergencyStop: false },
+            4: { excavatorMoving: true, rotorActive: true, currentSpeed: 1.5, emergencyStop: false }
+        };
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация всех экскаваторов
+            for (let i = 1; i <= 4; i++) {
+                initExcavatorSystem(i);
+            }
+        });
+
+        function initExcavatorSystem(excavatorNum) {
+            // Инициализация ротора с ковшами
+            const rotor = document.getElementById(`rotor-${excavatorNum}`);
+            if (!rotor) return;
+            
+            const bucketCount = 8;
+            
+            for (let i = 0; i < bucketCount; i++) {
+                const bucket = document.createElement('div');
+                bucket.className = 'bucket';
+                
+                const angle = (i / bucketCount) * 2 * Math.PI;
+                const radius = 22;
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+                
+                bucket.style.left = (25 + x) + 'px';
+                bucket.style.top = (25 + y) + 'px';
+                
+                rotor.appendChild(bucket);
+            }
+
+            // Создание шпал
+            const railSystem = document.getElementById(`rail-system-${excavatorNum}`);
+            if (!railSystem) return;
+            
+            const tieCount = 20;
+            
+            for (let i = 0; i < tieCount; i++) {
+                const tie = document.createElement('div');
+                tie.className = 'rail-tie';
+                tie.style.left = (i * (100 / tieCount)) + '%';
+                railSystem.appendChild(tie);
+            }
+
+            // Анимация ротора
+            rotor.style.animation = 'rotorRotation 6s linear infinite';
+        }
+
+        function openExcavatorSystem(excavatorNum) {
+            closeModal(); // Закрываем предыдущее модальное окно
+            currentModal = excavatorNum;
+            document.getElementById('modal-overlay').style.display = 'block';
+            document.getElementById(`excavator-modal-${excavatorNum}`).style.display = 'block';
+            
+            // Запускаем обновление данных для этого экскаватора
+            startExcavatorSystem(excavatorNum);
+        }
+
+        function startExcavatorSystem(excavatorNum) {
+            // Запускаем интервалы обновления для конкретного экскаватора
+            if (window.excavatorIntervals) {
+                clearInterval(window.excavatorIntervals.position);
+                clearInterval(window.excavatorIntervals.data);
+                clearInterval(window.excavatorIntervals.particles);
+            }
+            
+            window.excavatorIntervals = {
+                position: setInterval(() => updateExcavatorPosition(excavatorNum), 60),
+                data: setInterval(() => updateSystemData(excavatorNum), 1000),
+                particles: setInterval(() => createMaterialParticle(excavatorNum), 500)
+            };
+            
+            updateSystemData(excavatorNum);
+        }
+
+        function closeModal() {
+            if (currentModal) {
+                document.getElementById('modal-overlay').style.display = 'none';
+                document.getElementById(`excavator-modal-${currentModal}`).style.display = 'none';
+                
+                // Останавливаем интервалы
+                if (window.excavatorIntervals) {
+                    clearInterval(window.excavatorIntervals.position);
+                    clearInterval(window.excavatorIntervals.data);
+                    clearInterval(window.excavatorIntervals.particles);
+                }
+                
+                currentModal = null;
+            }
+        }
+
+        // Функции управления
+        function controlAction(action, excavatorNum) {
+            const state = systemStates[excavatorNum];
+            
+            switch(action) {
+                case 'emergency_stop':
+                    state.emergencyStop = !state.emergencyStop;
+                    state.excavatorMoving = !state.emergencyStop;
+                    state.rotorActive = !state.emergencyStop;
+                    
+                    const stopBtn = document.querySelector(`#excavator-modal-${excavatorNum} .control-btn.warning`) || 
+                                  document.querySelector(`#excavator-modal-${excavatorNum} .control-btn.success`);
+                    if (state.emergencyStop) {
+                        stopBtn.textContent = 'ПУСК';
+                        stopBtn.classList.remove('warning');
+                        stopBtn.classList.add('success');
+                        document.getElementById(`rotor-${excavatorNum}`).style.animationPlayState = 'paused';
+                    } else {
+                        stopBtn.textContent = 'СТОП';
+                        stopBtn.classList.remove('success');
+                        stopBtn.classList.add('warning');
+                        document.getElementById(`rotor-${excavatorNum}`).style.animationPlayState = 'running';
+                    }
+                    break;
+                    
+                case 'left_zoom':
+                    toggleButton(`btn-left-zoom-${excavatorNum}`);
+                    break;
+                    
+                case 'right_sr':
+                    toggleButton(`btn-right-sr-${excavatorNum}`);
+                    break;
+                    
+                default:
+                    toggleButton(`btn-${action.replace(/_/g, '-')}-${excavatorNum}`);
+            }
+        }
+
+        function toggleButton(btnId) {
+            const btn = document.getElementById(btnId);
+            if (btn) {
+                btn.classList.toggle('active');
+            }
+        }
+
+        function createMaterialParticle(excavatorNum) {
+            const state = systemStates[excavatorNum];
+            if (!state.rotorActive) return;
+            
+            const particle = document.createElement('div');
+            particle.className = 'material-particle';
+            
+            const startX = 260 + Math.random() * 20;
+            particle.style.left = startX + 'px';
+            particle.style.top = '80px';
+            
+            document.getElementById(`geology-container-${excavatorNum}`).appendChild(particle);
+            
+            particle.style.animation = `materialDrop ${1 + Math.random()}s ease-out forwards`;
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }, 1500);
+        }
+
+        function updateExcavatorPosition(excavatorNum) {
+            const state = systemStates[excavatorNum];
+            if (!state.excavatorMoving) return;
+            
+            const excavator = document.getElementById(`excavator-${excavatorNum}`);
+            let excavatorPos = parseInt(excavator.style.left) || 80;
+
+            excavatorPos += 0.3 * state.currentSpeed;
+            
+            if (excavatorPos > 300) {
+                excavatorPos = 80;
+            }
+            
+            excavator.style.left = excavatorPos + 'px';
+        }
+
+        function updateSystemData(excavatorNum) {
+            const state = systemStates[excavatorNum];
+            const trackElement = document.getElementById(`track-progress-${excavatorNum}`);
+            const stationElement = document.getElementById(`station-value-${excavatorNum}`);
+            const distanceElement = document.getElementById(`distance-value-${excavatorNum}`);
+            const timeElement = document.getElementById(`current-time-${excavatorNum}`);
+            
+            if (!trackElement || !stationElement) return;
+            
+            let trackVal = parseFloat(trackElement.textContent);
+            let stationVal = parseFloat(stationElement.textContent);
+            
+            if (state.excavatorMoving) {
+                trackVal += 0.012 * state.currentSpeed;
+                stationVal += 0.012 * state.currentSpeed;
+            }
+            
+            const distanceVal = 2.10 + Math.random() * 0.06;
+            
+            trackElement.textContent = trackVal.toFixed(2);
+            stationElement.textContent = stationVal.toFixed(2);
+            if (distanceElement) {
+                distanceElement.textContent = distanceVal.toFixed(2);
+            }
+            
+            const now = new Date();
+            if (timeElement) {
+                timeElement.textContent = 
+                    `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth()+1).toString().padStart(2, '0')} ` +
+                    `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            }
+        }
+
+        // Закрытие модального окна по ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Закрытие при клике на overlay
+        document.getElementById('modal-overlay').addEventListener('click', closeModal);
+    </script>
+</body>
+</html>
